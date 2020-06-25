@@ -2,15 +2,31 @@
   <div class="login_container">
     <div class="login_box">
       <el-form :model="login_form" class="login_form" :rules="rules" ref="login_form_Ref">
-        <div class="tx_box">
-          <img src="../assets/logo.png" alt="" />
-        </div>
-        <el-form-item prop="username">
-          <el-input auto-complete="off" v-model="login_form.username" placeholder="请输入账号" prefix-icon="el-icon-user"></el-input>
-        </el-form-item>
-        <el-form-item prop="password">
-          <el-input show-password placeholder="请输入密码" v-model="login_form.password" prefix-icon="el-icon-lock"></el-input>
-        </el-form-item>
+
+          <div class="tx_box">
+            <img src="../assets/logo.png" alt="" />
+          </div>
+
+        <el-row>
+          <el-form-item prop="username">
+            <el-input auto-complete="off" v-model="login_form.username" placeholder="请输入账号" prefix-icon="el-icon-user"></el-input>
+          </el-form-item>
+        </el-row>
+        <el-row>
+          <el-form-item prop="password">
+            <el-input show-password placeholder="请输入密码" v-model="login_form.password" prefix-icon="el-icon-lock"></el-input>
+          </el-form-item>
+        </el-row>
+        <!-- <el-row>
+          <el-col :span="15">
+            <el-form-item prop="yzcode">
+              <el-input placeholder="请输入验证码" v-model="login_form.yzcode" prefix-icon="el-icon-lock"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <img  alt="点击切换验证码"  src="../assets/logo.png" style="width: 100px;height: 30px;" />
+          </el-col>
+        </el-row> -->
         <el-form-item class="login_btns">
           <el-button type="primary" @click="login">登录</el-button>
           <el-button type="info" @click="resetLoginInfo">重置</el-button>
@@ -34,24 +50,43 @@
             trigger: 'blur'
           }],
           password: [{
-              required: true,
-              message: '请输入密码',
-              trigger: 'blur'
-            },
-            {
-              min: 3, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur'
-            }
-          ]
+            required: true,
+            message: '请输入密码',
+            trigger: 'blur'
+          }]
         }
       }
     },
-    methods:{
-      resetLoginInfo(){
+    methods: {
+      resetLoginInfo() {
         this.$refs.login_form_Ref.resetFields()
       },
-      login(){
-        this.$refs.login_form_Ref.validate((isvalid)=>{
-          
+      login() {
+        // 表单预验证
+        this.$refs.login_form_Ref.validate((isvalid) => {
+          if (!isvalid) {
+            return false
+          } else {
+            //  请求登录接口
+            this.$http.post('api/Account/Login', this.login_form).then((res) => {
+              // 获取返回的result
+              var rtnData = res.data;
+              if (!rtnData) {
+                return false
+              }
+              if (rtnData.code !== 1) {
+                this.$message.error(rtnData.message)
+                return false
+              } else {
+                this.$message.success("登录成功")
+                return true
+              }
+            }).catch((err) => {
+              var rtnData = res.data;
+              this.$message.error(rtnData.message)
+              return false
+            })
+          }
         })
       }
     }
