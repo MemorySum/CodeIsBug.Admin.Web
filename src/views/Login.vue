@@ -3,9 +3,9 @@
     <div class="login_box">
       <el-form :model="login_form" class="login_form" :rules="rules" ref="login_form_Ref">
 
-          <div class="tx_box">
-            <img src="../assets/logo.png" alt="" />
-          </div>
+        <div class="tx_box">
+          <img src="../assets/bg.png" alt="" />
+        </div>
 
         <el-row>
           <el-form-item prop="username">
@@ -74,16 +74,17 @@
               if (!rtnData) {
                 return false
               }
-              if (rtnData.code !== 1) {
-                this.$message.error(rtnData.message)
+              if (rtnData.Code !== 1) {
+                this.$message.error(rtnData.Message)
                 return false
               } else {
                 this.$message.success("登录成功")
-                return true
+                sessionStorage.setItem("user_access_Token", rtnData.ExtendObject.Access_Token)
+                this.$router.push('/home')
               }
             }).catch((err) => {
-              var rtnData = res.data;
-              this.$message.error(rtnData.message)
+              var rtnData = err.data;
+              this.$message.error(rtnData.Message)
               return false
             })
           }
