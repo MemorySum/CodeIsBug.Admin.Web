@@ -22,7 +22,7 @@
           </div>
           <el-menu width="200px" background-color="#393D49" text-color="#fff" active-text-color="#ffd04b"
             :collapse-transition="false" :collapse="IsCospace" router unique-opened>
-            <el-submenu :index="item.id" v-for="item in menuIndex" :key="item.id">
+            <el-submenu :index="String(item.MenuId)" v-for="item in menuIndex" :key="item.MenuId">
               <template slot="title">
                <i :class="item.icon"></i>
                 <span>{{item.menuName}}</span>
@@ -79,7 +79,6 @@
             return this.$message.error(rtnData.Message)
           } else {
             this.menuIndex =JSON.parse(rtnData.Object)
-            console.log(this.menuIndex)
           }
         }).catch(error=>{
 
