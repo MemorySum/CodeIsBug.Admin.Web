@@ -27,10 +27,10 @@
                <i :class="item.icon"></i>
                 <span>{{item.menuName}}</span>
               </template >
-              <el-menu-item :index="child.path" v-if="item.children !=null" v-for="child in item.children" :key="child.id">
+              <el-menu-item :index="Children.path" v-if="item.Children !=null" v-for="Children in item.Children" :key="Children.id">
                 <template slot="title">
-                  <i :class="child.icon"></i>
-                  <span>{{child.menuName}}</span>
+                  <i :class="Children.icon"></i>
+                  <span>{{Children.menuName}}</span>
                 </template>
               </el-menu-item>
             </el-submenu>

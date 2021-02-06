@@ -32,7 +32,7 @@
           >
             <el-table-column prop="Name" sortable label="菜单名称" min-width="120"></el-table-column>
 
-            <el-table-column prop="Icon" label="图标" min-width="120">
+            <el-table-column prop="Icon" label="图标" min-width="60" center>
               <template slot-scope="scope">
                 <i :class="scope.row.Icon"></i>
               </template>
@@ -59,6 +59,7 @@
             :page-size="queryInfo.pageSize"
             layout="total, sizes, prev, pager, next, jumper"
             :total="total"
+            :background="true"
           ></el-pagination>
         </div>
       </el-card>
@@ -291,8 +292,9 @@ export default {
                 return this.$message.error(rtnData.Message);
               } else {
                 this.loadData();
-                this.dialogFormEditVisible = false;
+                
                 this.$refs.editForm.resetFields();
+                this.dialogFormEditVisible = false;
                 return this.$message.success("菜单修改成功!");
               }
             })
