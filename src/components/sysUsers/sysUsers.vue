@@ -104,63 +104,63 @@
 export default {
   data() {
     var checkPhone = (rule, value, callback) => {
-      const phoneReg = /^1[345789]\d{9}$$/;
+      const phoneReg = /^1[345789]\d{9}$$/
       if (!Number.isInteger(+value)) {
-        callback(new Error("请输入数字值"));
+        callback(new Error('请输入数字值'))
       } else {
-        if (phoneReg.test(value) || "" === value) {
-          callback();
+        if (phoneReg.test(value) || value === '') {
+          callback()
         } else {
-          callback(new Error("电话号码格式不正确"));
+          callback(new Error('电话号码格式不正确'))
         }
       }
-    };
+    }
     var checkEmail = (rule, value, callback) => {
-      const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+      const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
 
-      if (mailReg.test(value) || "" === value) {
-        callback();
+      if (mailReg.test(value) || value === '') {
+        callback()
       } else {
-        callback(new Error("请输入正确的邮箱格式"));
+        callback(new Error('请输入正确的邮箱格式'))
       }
-    };
+    }
 
     return {
       queryInfo: {
-        query: "",
+        query: '',
         pageIndex: 1,
-        pageSize: 20,
+        pageSize: 20
       },
       form: {
-        Name: "",
-        UserName: "",
-        Phone: "",
-        Email: "",
+        Name: '',
+        UserName: '',
+        Phone: '',
+        Email: ''
       },
       editForm: {
-        UserId: "",
-        Name: "",
-        UserName: "",
-        Phone: "",
-        Email: "",
+        UserId: '',
+        Name: '',
+        UserName: '',
+        Phone: '',
+        Email: ''
       },
       Rules: {
         Name: [
           {
             required: true,
-            message: "请输入用户昵称",
-            trigger: "blur",
-          },
+            message: '请输入用户昵称',
+            trigger: 'blur'
+          }
         ],
         UserName: [
           {
             required: true,
-            message: "请输入用户账号",
-            trigger: "blur",
-          },
+            message: '请输入用户账号',
+            trigger: 'blur'
+          }
         ],
-        Phone: [{ validator: checkPhone, trigger: "blur" }],
-        Email: [{ validator: checkEmail, trigger: "blur" }],
+        Phone: [{ validator: checkPhone, trigger: 'blur' }],
+        Email: [{ validator: checkEmail, trigger: 'blur' }]
       },
       tableData: [],
       total: 0,
@@ -168,160 +168,160 @@ export default {
       limits: [2, 5, 10, 20],
       dialogFormVisible: false,
       dialogFormEditVisible: false,
-      formLabelWidth: "120px",
-      menuOptions: [],
-    };
+      formLabelWidth: '120px',
+      menuOptions: []
+    }
   },
 
   created() {
-    this.loadData();
+    this.loadData()
   },
 
   methods: {
     handleSizeChange(val) {
-      this.queryInfo.pageSize = val;
-      this.queryInfo.pageIndex = 1;
-      this.loadData();
+      this.queryInfo.pageSize = val
+      this.queryInfo.pageIndex = 1
+      this.loadData()
     },
     handleCurrentChange(val) {
-      this.queryInfo.pageIndex = val;
-      this.loadData();
+      this.queryInfo.pageIndex = val
+      this.loadData()
     },
     search() {
-      this.loadData();
+      this.loadData()
     },
     loadData() {
       this.$http
-        .get("/api/SysUser/GetUserList", {
-          params: this.queryInfo,
+        .get('/api/SysUser/GetUserList', {
+          params: this.queryInfo
         })
         .then((res) => {
           if (!res) {
-            return this.$message.error("获取用户列表出错");
+            return this.$message.error('获取用户列表出错')
           }
-          this.tableData = res.data.Object.data;
-          this.total = res.data.Object.count;
+          this.tableData = res.data.Object.data
+          this.total = res.data.Object.count
         })
-        .catch((err) => {});
+        .catch((err) => {})
     },
     submit() {
       this.$refs.addRuleForm.validate((isvalid) => {
         if (!isvalid) {
-          return false;
+          return false
         } else {
           this.$http
-            .post("/api/SysUser/AddUser", this.form)
+            .post('/api/SysUser/AddUser', this.form)
             .then((res) => {
               if (!res) {
-                return this.$message.error("添加用户发生异常!");
+                return this.$message.error('添加用户发生异常!')
               }
-              var rtnData = res.data;
+              var rtnData = res.data
               if (rtnData.Code !== 1) {
-                return this.$message.error(rtnData.Message);
+                return this.$message.error(rtnData.Message)
               } else {
-                this.loadData();
-                this.dialogFormVisible = false;
-                this.$refs.addRuleForm.resetFields();
-                return this.$message.success("用户添加成功!");
+                this.loadData()
+                this.dialogFormVisible = false
+                this.$refs.addRuleForm.resetFields()
+                return this.$message.success('用户添加成功!')
               }
             })
             .catch((error) => {
-              var rtnData = error.data;
-              this.$message.error(rtnData.Message);
-            });
+              var rtnData = error.data
+              this.$message.error(rtnData.Message)
+            })
         }
-      });
+      })
     },
     del(UserId) {
       if (!UserId) {
-        return;
+        return
       }
-      this.$confirm("此操作将删除该用户, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-        center: true,
+      this.$confirm('此操作将删除该用户, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
       })
         .then(() => {
           this.$http
-            .get("/api/SysUser/DelUser", {
+            .get('/api/SysUser/DelUser', {
               params: {
-                UserId: UserId,
-              },
+                UserId: UserId
+              }
             })
             .then((res) => {
               if (!res) {
-                return this.$message.error("删除用户发生异常!");
+                return this.$message.error('删除用户发生异常!')
               }
-              var rtnData = res.data;
+              var rtnData = res.data
               if (rtnData.Code !== 1) {
-                return this.$message.error(rtnData.Message);
+                return this.$message.error(rtnData.Message)
               } else {
-                this.loadData();
-                return this.$message.success("用户删除成功");
+                this.loadData()
+                return this.$message.success('用户删除成功')
               }
             })
             .catch((error) => {
-              return this.$message.error(error.data.Message);
-            });
+              return this.$message.error(error.data.Message)
+            })
         })
-        .catch(() => {});
+        .catch(() => {})
     },
     edit(UserId) {
       if (!UserId) {
-        return this.$message.error("参数错误");
+        return this.$message.error('参数错误')
       }
       this.$http
-        .get("/api/SysUser/GetUserInfo", {
+        .get('/api/SysUser/GetUserInfo', {
           params: {
-            UserId: UserId,
-          },
+            UserId: UserId
+          }
         })
         .then((res) => {
           if (!res) {
-            return this.$message.error("获取用户信息发生异常!");
+            return this.$message.error('获取用户信息发生异常!')
           }
-          var rtnData = res.data;
+          var rtnData = res.data
           if (rtnData.Code !== 1) {
-            return this.$message.error(rtnData.Message);
+            return this.$message.error(rtnData.Message)
           } else {
-            this.editForm = rtnData.Object;
-            this.dialogFormEditVisible = true;
+            this.editForm = rtnData.Object
+            this.dialogFormEditVisible = true
           }
         })
-        .catch((err) => {});
+        .catch((err) => {})
     },
     editSubmit() {
       this.$refs.editRuleForm.validate((isvalid) => {
         if (!isvalid) {
-          return false;
+          return false
         } else {
           this.$http
-            .post("/api/SysUser/UpdateUserInfo", this.editForm)
+            .post('/api/SysUser/UpdateUserInfo', this.editForm)
             .then((res) => {
               if (!res) {
-                return this.$message.error("修改用户发生异常!");
+                return this.$message.error('修改用户发生异常!')
               }
-              var rtnData = res.data;
+              var rtnData = res.data
               if (rtnData.Code !== 1) {
-                return this.$message.error(rtnData.Message);
+                return this.$message.error(rtnData.Message)
               } else {
-                this.loadData();
-                this.dialogFormEditVisible = false;
-                this.$refs.editRuleForm.resetFields();
-                return this.$message.success("用户修改成功!");
+                this.loadData()
+                this.dialogFormEditVisible = false
+                this.$refs.editRuleForm.resetFields()
+                return this.$message.success('用户修改成功!')
               }
             })
             .catch((error) => {
-              console.log(error);
-              var rtnData = error.data;
-              this.$message.error(rtnData.Message);
-            });
+              console.log(error)
+              var rtnData = error.data
+              this.$message.error(rtnData.Message)
+            })
         }
-      });
-    },
-  },
-};
+      })
+    }
+  }
+}
 </script>
 <style lang="less" scoped>
 </style>

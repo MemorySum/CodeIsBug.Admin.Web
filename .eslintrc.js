@@ -27,7 +27,7 @@ module.exports = {
     'padded-blocks':0
   },
 
-  'extends': [
+  extends: [
     'plugin:vue/essential',
     '@vue/standard'
   ]

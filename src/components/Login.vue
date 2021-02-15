@@ -57,6 +57,7 @@
         }
       }
     },
+
     methods: {
       resetLoginInfo() {
         this.$refs.login_form_Ref.resetFields()
@@ -70,7 +71,7 @@
             //  请求登录接口
             this.$http.post('api/Account/Login', this.login_form).then((res) => {
               // 获取返回的result
-              var rtnData = res.data;
+              var rtnData = res.data
               if (!rtnData) {
                 return false
               }
@@ -78,15 +79,11 @@
                 this.$message.error(rtnData.Message)
                 return false
               } else {
-                this.$message.success("登录成功")
-                sessionStorage.setItem("user_access_Token", rtnData.ExtendObject.Access_Token)
+                this.$message.success('登录成功')
+                sessionStorage.setItem('user_access_Token', rtnData.ExtendObject.Access_Token)
                 this.$router.push('/home')
               }
-            }).catch((err) => {
-              var rtnData = err.data;
-              this.$message.error(rtnData.Message)
-              return false
-            })
+            }).catch((err) => console.log(err))
           }
         })
       }

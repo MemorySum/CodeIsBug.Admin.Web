@@ -8,25 +8,36 @@ import App from './App.vue'
 import router from './router'
 import './plugins/element.js'
 import axios from 'axios'
+import iconPicker from 'e-icon-picker'
+import 'element-ui/lib/theme-chalk/icon.css' // element-ui 图标库
+import 'e-icon-picker/dist/symbol.js' // 基本彩色图标库
+import 'e-icon-picker/dist/index.css' // 基本样式，包含基本图标
+import 'font-awesome/css/font-awesome.min.css' // font-awesome 图标库
 
+// 统一处理token请求头信息
 axios.interceptors.request.use(config => {
-
-  let user_access_Token = sessionStorage.getItem('user_access_Token')
-  config.headers.Authorization = 'Bearer ' + user_access_Token
-  return config
+    const user_access_Token = sessionStorage.getItem('user_access_Token')
+    config.headers.Authorization = 'Bearer ' + user_access_Token
+    return config
 }, error => {
-  return Promise.reject(error)
+    return Promise.reject(error)
 })
-
 
 // 引入ajax请求组件 设置api前缀
 Vue.prototype.$http = axios
 axios.defaults.baseURL = 'api'
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+axios.defaults.headers.post['Content-Type'] = 'application/json'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.use(iconPicker, {
+    ElementUI: true,
+    eIcon: true,
+    FontAwesome: true,
+    eIconSymbol: true
+})
+
 new Vue({
-  router,
-  render: h => h(App)
+    router,
+    render: h => h(App)
 }).$mount('#app')
