@@ -21,11 +21,6 @@
                 <span  style="margin-left: 5px;">{{ scope.row.Name}}</span>
               </template>
             </el-table-column>
-          <!--   <el-table-column prop="Icon" label="图标" min-width="60" center>
-              <template slot-scope="scope">
-                <i :class="scope.row.Icon"></i>
-              </template>
-            </el-table-column> -->
             <el-table-column prop="Url" label="地址" min-width="120"></el-table-column>
             <el-table-column prop="Level" sortable label="层级" min-width="60"></el-table-column>
             <el-table-column prop="Sort" sortable label="排序" min-width="60"></el-table-column>

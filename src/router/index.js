@@ -3,8 +3,8 @@ import VueRouter from 'vue-router'
 import Login from '../components/Login.vue'
 import Home from '../components/Home.vue'
 import Welcome from '../components/Welcome.vue'
-import sysmenu from '../components/sysmenu/menus.vue'
-import sysUsers from '../components/sysUsers/sysUsers.vue'
+import sysmenu from '../components/sysmenu/index.vue'
+import sysUsers from '../components/sysUsers/index.vue'
 import sysRoles from '../components/sysroles/index.vue'
 Vue.use(VueRouter)
 
