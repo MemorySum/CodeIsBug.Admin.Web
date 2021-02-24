@@ -6,6 +6,7 @@ import Welcome from '../components/Welcome.vue'
 import sysmenu from '../components/sysmenu/index.vue'
 import sysUsers from '../components/sysUsers/index.vue'
 import sysRoles from '../components/sysroles/index.vue'
+import sysUserRoleComparison from '../components/sysUserRoleComparison/index.vue'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -38,6 +39,9 @@ const router = new VueRouter({
                 }, {
                     path: '/sysRoles',
                     component: sysRoles
+                }, {
+                    path: '/sysUserRoleComparison',
+                    component: sysUserRoleComparison
                 }
             ]
         }
