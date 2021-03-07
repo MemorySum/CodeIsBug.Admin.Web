@@ -23,6 +23,25 @@ axios.interceptors.request.use(config => {
     return Promise.reject(error)
 })
 
+
+axios.interceptors.response.use(response => {
+    if (response.status === 200) {
+
+    }
+    return response;
+}, error => {
+
+    if (error.response.status === 401) {
+        // iView.Message.warning('未获取到登录状态');
+        router.push({
+            name: '/login'
+        });
+
+    }
+    return Promise.resolve(error.response);
+});
+
+
 // 引入ajax请求组件 设置api前缀
 Vue.prototype.$http = axios
 axios.defaults.baseURL = 'api'

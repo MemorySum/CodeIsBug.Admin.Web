@@ -1,54 +1,53 @@
 <template>
-<div>
-    <el-container class="home-container">
-        <el-header>
-            <div class="logo">
-                <img src="../assets/bg.png" />
-                <span>CodeIsBug.Admin 后台管理系统</span>
-            </div>
-            <el-dropdown @command="IndexHeaderEnvent">
-                <span class="el-dropdown-link">
-                    Admin<i class="el-icon-arrow-down el-icon--right"></i>
-                </span>
-                <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>
-                        <el-link href="http://localhost:8099/swagger" target="_blank" :underline="false">
-                            Api文档
-                        </el-link>
-                    </el-dropdown-item>
-                    <el-dropdown-item command="logOut">退出系统</el-dropdown-item>
-                </el-dropdown-menu>
-            </el-dropdown>
-        </el-header>
-        <el-container>
-            <el-aside :width="IsCospace ? '60px' : '200px'">
-                <div class="meun_toggle" @click="toggleCospace">
-                    <i :class="IsCospace ? 'el-icon-s-unfold' : 'el-icon-s-fold'"></i>
+    <div>
+        <el-container class="home-container">
+            <el-header>
+                <div class="logo">
+                    <span>CodeIsBug.Admin 后台管理系统</span>
                 </div>
-
-                <el-menu width="200px" background-color="#393D49" text-color="#fff" active-text-color="#409eff" :collapse-transition="false" :collapse="IsCospace" unique-opened router :default-active="this.$route.path">
-                    <el-submenu :index="item.id" v-for="item in menuIndex" :key="item.id">
-                        <template slot="title">
-                            <i :class="item.icon"></i>
-                            <span>{{ item.menuName }}</span>
-                        </template>
-                        <el-menu-item :index="Children.path" v-for="Children in item.Children" :key="Children.path">
-                            <template slot="title">
-                                <i class="el-icon-menu"></i>
-                                <span>{{ Children.menuName }}</span>
-                            </template>
-                        </el-menu-item>
-                    </el-submenu>
-                </el-menu>
-            </el-aside>
+                <el-dropdown @command="IndexHeaderEnvent">
+                    <span class="el-dropdown-link">
+                        <span>{{this.userName }}</span><span>,拥有角色：{{this.userRoleName}}</span><i class="el-icon-arrow-down el-icon--right"></i>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item>
+                            <el-link href="http://localhost:8099/swagger" target="_blank" :underline="false">
+                                Api文档
+                            </el-link>
+                        </el-dropdown-item>
+                        <el-dropdown-item command="logOut">退出系统</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </el-header>
             <el-container>
-                <el-main>
-                    <router-view></router-view>
-                </el-main>
+                <el-aside :width="IsCospace ? '60px' : '200px'">
+                    <div class="meun_toggle" @click="toggleCospace">
+                        <i :class="IsCospace ? 'el-icon-s-unfold' : 'el-icon-s-fold'"></i>
+                    </div>
+
+                    <el-menu width="200px" background-color="#393D49" text-color="#fff" active-text-color="#409eff" :collapse-transition="false" :collapse="IsCospace" unique-opened router :default-active="this.$route.path">
+                        <el-submenu :index="item.MenuId" v-for="item in menuIndex" :key="item.MenuId">
+                            <template slot="title">
+                                <i :class="item.Icon"></i>
+                                <span>{{ item.Name }}</span>
+                            </template>
+                            <el-menu-item :index="Children.Url" v-for="Children in item.Children" :key="Children.Url">
+                                <template slot="title">
+                                    <i class="el-icon-menu"></i>
+                                    <span>{{ Children.Name }}</span>
+                                </template>
+                            </el-menu-item>
+                        </el-submenu>
+                    </el-menu>
+                </el-aside>
+                <el-container>
+                    <el-main>
+                        <router-view></router-view>
+                    </el-main>
+                </el-container>
             </el-container>
         </el-container>
-    </el-container>
-</div>
+    </div>
 </template>
 
 <script>
@@ -57,10 +56,13 @@ export default {
         return {
             IsCospace: false,
             menuIndex: [],
+            userName: '',
+            userRoleName: ''
         };
     },
     created() {
-        this.getIndexMenu();
+        this.loadIndexInfo()
+        // this.getIndexMenu();
     },
     methods: {
         IndexHeaderEnvent(command) {
@@ -73,6 +75,14 @@ export default {
         },
         toggleCospace() {
             this.IsCospace = !this.IsCospace;
+        },
+        loadIndexInfo() {
+            let userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+            if (userInfo != null) {
+                this.userName = userInfo.UserName
+                this.menuIndex = userInfo.UserMenus
+                this.userRoleName = userInfo.UserRoleName
+            }
         },
         getIndexMenu() {
             this.$http
@@ -124,6 +134,10 @@ export default {
 
 .el-aside {
     background-color: #393d49;
+
+    .el-menu {
+        border-right: none;
+    }
 }
 
 .el-main {

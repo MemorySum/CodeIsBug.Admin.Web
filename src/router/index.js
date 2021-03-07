@@ -7,6 +7,8 @@ import sysmenu from '../components/sysmenu/index.vue'
 import sysUsers from '../components/sysUsers/index.vue'
 import sysRoles from '../components/sysroles/index.vue'
 import sysUserRoleComparison from '../components/sysUserRoleComparison/index.vue'
+import SysRoleMenuComparison from '../components/SysRoleMenuComparison/index.vue'
+import cityInfo from '../components/CityInfo/index.vue'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -42,6 +44,12 @@ const router = new VueRouter({
                 }, {
                     path: '/sysUserRoleComparison',
                     component: sysUserRoleComparison
+                }, {
+                    path: '/cityInfo',
+                    component: cityInfo
+                }, {
+                    path: '/SysRoleMenuComparison',
+                    component: SysRoleMenuComparison
                 }
             ]
         }
@@ -56,10 +64,7 @@ router.beforeEach((to, from, next) => {
 })
 
 const routerPush = VueRouter.prototype.push;
-
 VueRouter.prototype.push = function push(location) {
-
-     
     return routerPush.call(this, location).catch(error => error)
 
 }
