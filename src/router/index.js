@@ -1,14 +1,34 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '../components/Login.vue'
-import Home from '../components/Home.vue'
-import Welcome from '../components/Welcome.vue'
-import sysmenu from '../components/sysmenu/index.vue'
-import sysUsers from '../components/sysUsers/index.vue'
-import sysRoles from '../components/sysroles/index.vue'
-import sysUserRoleComparison from '../components/sysUserRoleComparison/index.vue'
-import SysRoleMenuComparison from '../components/SysRoleMenuComparison/index.vue'
-import cityInfo from '../components/CityInfo/index.vue'
+
+const Login = () =>
+    import ( /* webpackChunkName: 'Index' */ '../view/Login.vue')
+const Home = () =>
+    import ( /* webpackChunkName: 'Index' */ '../view/Home.vue')
+const Welcome = () =>
+    import ( /* webpackChunkName: 'Index' */ '../view/Welcome.vue')
+
+const sysmenu = () =>
+    import ( /* webpackChunkName: 'sysmenu' */ '../view/sysmenu/index.vue')
+
+const sysUsers = () =>
+    import ( /* webpackChunkName: 'sysUsers' */ '../view/sysUsers/index.vue')
+
+const sysRoles = () =>
+    import ( /* webpackChunkName: 'sysRoles' */ '../view/sysroles/index.vue')
+
+const sysUserRoleComparison = () =>
+    import ( /* webpackChunkName: 'sysUserRoleComparison' */ '../view/sysUserRoleComparison/index.vue')
+
+const SysRoleMenuComparison = () =>
+    import ( /* webpackChunkName: 'SysRoleMenuComparison' */ '../view/SysRoleMenuComparison/index.vue')
+
+const cityInfo = () =>
+    import ( /* webpackChunkName: 'cityInfo' */ '../view/CityInfo/index.vue')
+
+const EmailSmtpSetting = () =>
+    import ( /* webpackChunkName: 'EmailSmtpSetting' */ '../view/EmailSmtpSetting/index.vue')
+
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -50,6 +70,9 @@ const router = new VueRouter({
                 }, {
                     path: '/SysRoleMenuComparison',
                     component: SysRoleMenuComparison
+                }, {
+                    path: '/EmailSmtpSetting',
+                    component: EmailSmtpSetting
                 }
             ]
         }

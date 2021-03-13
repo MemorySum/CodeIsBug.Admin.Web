@@ -1,96 +1,98 @@
 <template>
-<div>
     <div>
-        <el-breadcrumb separator-class="el-icon-arrow-right">
-            <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-            <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-            <el-breadcrumb-item>用户列表</el-breadcrumb-item>
-        </el-breadcrumb>
+        <div>
+            <el-breadcrumb separator-class="el-icon-arrow-right">
+                <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+                <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+                <el-breadcrumb-item>用户列表</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
+
+        <div>
+            <el-card class="box-card" shadow="never">
+                <div slot="header" class="clearfix">
+                    <el-row :gutter="20">
+                        <el-col :span="6">
+                            <el-input v-model="queryInfo.query" placeholder="请输入用户名称或账号查询" clearable>
+                                <el-button slot="append" @click="search" icon="el-icon-search"></el-button>
+                            </el-input>
+                        </el-col>
+                        <el-col :span="4">
+                            <el-button type="primary" @click="dialogFormVisible = true">新增用户</el-button>
+                        </el-col>
+                    </el-row>
+                </div>
+                <div>
+                    <el-table :data="tableData" style="width: 100%;height: 100%;" border row-key="UserId">
+                        <el-table-column prop="Name" sortable label="用户昵称" min-width="120"></el-table-column>
+                        <el-table-column prop="UserName" sortable label="用户账号" min-width="120"></el-table-column>
+
+                        <el-table-column prop="Phone" label="手机号" min-width="120"></el-table-column>
+                        <el-table-column prop="Email" label="邮箱" min-width="120"></el-table-column>
+
+                        <el-table-column prop="AddTime" sortable label="添加时间" min-width="120"></el-table-column>
+                        <el-table-column prop="ModifyTime" sortable label="最后修改时间" min-width="120"></el-table-column>
+                        <el-table-column label="操作">
+                            <template slot-scope="scope">
+                                <el-button-group>
+                                    <el-button type="info" size="mini" @click="edit(scope.row.UserId)">编辑</el-button>
+                                    <el-button type="danger" size="mini" @click="del(scope.row.UserId)">删除</el-button>
+                                </el-button-group>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :page-sizes="limits" :page-size="queryInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total"></el-pagination>
+                </div>
+            </el-card>
+
+            <el-dialog title="新增用户" :visible.sync="dialogFormVisible" center width="30%">
+                <el-form :model="form" :rules="Rules" ref="addRuleForm">
+                    <el-form-item label="用户昵称" :label-width="formLabelWidth" prop="Name">
+                        <el-input v-model="form.Name" autocomplete="off" placeholder="请输入用户昵称" clearable></el-input>
+                    </el-form-item>
+                    <el-form-item label="用户账号" :label-width="formLabelWidth" prop="UserName">
+                        <el-input v-model="form.UserName" autocomplete="off" placeholder="请输入用户账号" clearable></el-input>
+                    </el-form-item>
+                    <el-form-item label="手机号" :label-width="formLabelWidth" prop="Phone">
+                        <el-input v-model="form.Phone" autocomplete="off" placeholder="请输入手机号" clearable></el-input>
+                    </el-form-item>
+                    <el-form-item label="邮箱" :label-width="formLabelWidth" prop="Email">
+                        <el-input v-model="form.Email" autocomplete="off" placeholder="请输入邮箱" clearable></el-input>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogFormVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="submit">确 定</el-button>
+                </div>
+            </el-dialog>
+
+            <el-dialog title="编辑用户" :visible.sync="dialogFormEditVisible" center width="30%">
+                <el-form :model="editForm" :rules="Rules" ref="editRuleForm">
+                    <el-form-item label="用户昵称" :label-width="formLabelWidth" prop="Name">
+                        <el-input v-model="editForm.Name" autocomplete="off" placeholder="请输入用户昵称" clearable></el-input>
+                    </el-form-item>
+                    <el-form-item label="用户账号" :label-width="formLabelWidth" prop="UserName">
+                        <el-input v-model="editForm.UserName" autocomplete="off" placeholder="请输入用户账号" clearable></el-input>
+                    </el-form-item>
+                    <el-form-item label="手机号" :label-width="formLabelWidth" prop="Phone">
+                        <el-input v-model="editForm.Phone" autocomplete="off" placeholder="请输入手机号" clearable></el-input>
+                    </el-form-item>
+                    <el-form-item label="邮箱" :label-width="formLabelWidth" prop="Email">
+                        <el-input v-model="editForm.Email" autocomplete="off" placeholder="请输入邮箱" clearable></el-input>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogFormEditVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="editSubmit">确 定</el-button>
+                </div>
+            </el-dialog>
+        </div>
     </div>
-    <div>
-        <el-card class="box-card" shadow="never">
-            <div slot="header" class="clearfix">
-                <el-row :gutter="20">
-                    <el-col :span="6">
-                        <el-input v-model="queryInfo.query" placeholder="请输入用户名称或账号查询" clearable>
-                            <el-button slot="append" @click="search" icon="el-icon-search"></el-button>
-                        </el-input>
-                    </el-col>
-                    <el-col :span="4">
-                        <el-button type="primary" @click="dialogFormVisible = true">新增用户</el-button>
-                    </el-col>
-                </el-row>
-            </div>
-            <div>
-                <el-table :data="tableData" style="width: 100%;height: 100%;" border row-key="UserId">
-                    <el-table-column prop="Name" sortable label="用户昵称" min-width="120"></el-table-column>
-                    <el-table-column prop="UserName" sortable label="用户账号" min-width="120"></el-table-column>
-
-                    <el-table-column prop="Phone" label="手机号" min-width="120"></el-table-column>
-                    <el-table-column prop="Email" label="邮箱" min-width="120"></el-table-column>
-
-                    <el-table-column prop="AddTime" sortable label="添加时间" min-width="120"></el-table-column>
-                    <el-table-column prop="ModifyTime" sortable label="最后修改时间" min-width="120"></el-table-column>
-                    <el-table-column label="操作">
-                        <template slot-scope="scope">
-                            <el-button-group>
-                                <el-button type="info" size="mini" @click="edit(scope.row.UserId)">编辑</el-button>
-                                <el-button type="danger" size="mini" @click="del(scope.row.UserId)">删除</el-button>
-                            </el-button-group>
-                        </template>
-                    </el-table-column>
-                </el-table>
-                <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :page-sizes="limits" :page-size="queryInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total"></el-pagination>
-            </div>
-        </el-card>
-
-        <el-dialog title="新增用户" :visible.sync="dialogFormVisible" center width="30%">
-            <el-form :model="form" :rules="Rules" ref="addRuleForm">
-                <el-form-item label="用户昵称" :label-width="formLabelWidth" prop="Name">
-                    <el-input v-model="form.Name" autocomplete="off" placeholder="请输入用户昵称" clearable></el-input>
-                </el-form-item>
-                <el-form-item label="用户账号" :label-width="formLabelWidth" prop="UserName">
-                    <el-input v-model="form.UserName" autocomplete="off" placeholder="请输入用户账号" clearable></el-input>
-                </el-form-item>
-                <el-form-item label="手机号" :label-width="formLabelWidth" prop="Phone">
-                    <el-input v-model="form.Phone" autocomplete="off" placeholder="请输入手机号" clearable></el-input>
-                </el-form-item>
-                <el-form-item label="邮箱" :label-width="formLabelWidth" prop="Email">
-                    <el-input v-model="form.Email" autocomplete="off" placeholder="请输入邮箱" clearable></el-input>
-                </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="submit">确 定</el-button>
-            </div>
-        </el-dialog>
-
-        <el-dialog title="编辑用户" :visible.sync="dialogFormEditVisible" center width="30%">
-            <el-form :model="editForm" :rules="Rules" ref="editRuleForm">
-                <el-form-item label="用户昵称" :label-width="formLabelWidth" prop="Name">
-                    <el-input v-model="editForm.Name" autocomplete="off" placeholder="请输入用户昵称" clearable></el-input>
-                </el-form-item>
-                <el-form-item label="用户账号" :label-width="formLabelWidth" prop="UserName">
-                    <el-input v-model="editForm.UserName" autocomplete="off" placeholder="请输入用户账号" clearable></el-input>
-                </el-form-item>
-                <el-form-item label="手机号" :label-width="formLabelWidth" prop="Phone">
-                    <el-input v-model="editForm.Phone" autocomplete="off" placeholder="请输入手机号" clearable></el-input>
-                </el-form-item>
-                <el-form-item label="邮箱" :label-width="formLabelWidth" prop="Email">
-                    <el-input v-model="editForm.Email" autocomplete="off" placeholder="请输入邮箱" clearable></el-input>
-                </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormEditVisible = false">取 消</el-button>
-                <el-button type="primary" @click="editSubmit">确 定</el-button>
-            </div>
-        </el-dialog>
-    </div>
-</div>
 </template>
 
 <script>
 export default {
+
     data() {
         var checkPhone = (rule, value, callback) => {
             const phoneReg = /^1[345789]\d{9}$/

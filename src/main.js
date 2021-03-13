@@ -55,7 +55,6 @@ Vue.use(iconPicker, {
     FontAwesome: true,
     eIconSymbol: true
 })
-
 new Vue({
     router,
     render: h => h(App)
