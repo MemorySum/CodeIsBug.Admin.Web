@@ -123,7 +123,21 @@ export default {
         resetForm(formName) {
             this.$refs[formName].resetFields();
         },
+        loadDefaultData(){
+           this.$http
+                .get('/api/EmailSmtp/GetConfig')
+                .then(res => {
+                    if (!res) {
+                        return this.$message.error('获取邮件SMTP配置出错')
+                    }
+                    this.emailSettingModel = res.data.Object
+                })
+                .catch(err => {})
+        }
     },
+    created(){
+        this.loadDefaultData()
+    }
 };
 </script>
 

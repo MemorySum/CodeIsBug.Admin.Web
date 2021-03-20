@@ -69,6 +69,7 @@ export default {
             switch (command) {
                 case "logOut":
                     sessionStorage.removeItem("user_access_Token");
+                    sessionStorage.removeItem("userInfo");
                     this.$router.push("/login");
                     break;
             }
