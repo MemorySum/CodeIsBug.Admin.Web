@@ -1,53 +1,59 @@
 <template>
-    <div>
-        <el-container class="home-container">
-            <el-header>
-                <div class="logo">
-                    <span>CodeIsBug.Admin 后台管理系统</span>
+<div>
+    <el-container class="home-container">
+        <el-header>
+            <div class="logo">
+                <span>CodeIsBug.Admin 后台管理系统</span>
+            </div>
+            <el-dropdown @command="IndexHeaderEnvent">
+                <span class="el-dropdown-link">
+                    <span>{{this.userName }}</span><span>,拥有角色：{{this.userRoleName}}</span><i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item>
+                        <el-link href="http://localhost:8099/swagger" target="_blank" :underline="false">
+                            Api文档
+                        </el-link>
+                    </el-dropdown-item>
+                    <el-dropdown-item command="logOut">退出系统</el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+        </el-header>
+        <el-container>
+            <el-aside :width="IsCospace ? '60px' : '200px'">
+                <div class="meun_toggle" @click="toggleCospace">
+                    <i :class="IsCospace ? 'el-icon-s-unfold' : 'el-icon-s-fold'"></i>
                 </div>
-                <el-dropdown @command="IndexHeaderEnvent">
-                    <span class="el-dropdown-link">
-                        <span>{{this.userName }}</span><span>,拥有角色：{{this.userRoleName}}</span><i class="el-icon-arrow-down el-icon--right"></i>
-                    </span>
-                    <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>
-                            <el-link href="http://localhost:8099/swagger" target="_blank" :underline="false">
-                                Api文档
-                            </el-link>
-                        </el-dropdown-item>
-                        <el-dropdown-item command="logOut">退出系统</el-dropdown-item>
-                    </el-dropdown-menu>
-                </el-dropdown>
-            </el-header>
-            <el-container>
-                <el-aside :width="IsCospace ? '60px' : '200px'">
-                    <div class="meun_toggle" @click="toggleCospace">
-                        <i :class="IsCospace ? 'el-icon-s-unfold' : 'el-icon-s-fold'"></i>
-                    </div>
 
-                    <el-menu width="200px" background-color="#393D49" text-color="#fff" active-text-color="#409eff" :collapse-transition="false" :collapse="IsCospace" unique-opened router :default-active="this.$route.path">
-                        <el-submenu :index="item.MenuId" v-for="item in menuIndex" :key="item.MenuId">
+                <el-menu width="200px" background-color="#393D49" text-color="#fff" active-text-color="#409eff" :collapse-transition="false" :collapse="IsCospace" unique-opened router :default-active="this.$route.path">
+                    <el-menu-item slot="index">
+                        <template>
+                            <i class="el-icon-house"></i>
+                            <span>首页</span>
+                        </template>
+                    </el-menu-item>
+                    <el-submenu :index="item.MenuId" v-for="item in menuIndex" :key="item.MenuId">
+                        <template slot="title">
+                            <i :class="item.Icon"></i>
+                            <span>{{ item.Name }}</span>
+                        </template>
+                        <el-menu-item :index="Children.Url" v-for="Children in item.Children" :key="Children.Url">
                             <template slot="title">
-                                <i :class="item.Icon"></i>
-                                <span>{{ item.Name }}</span>
+                                <i class="el-icon-menu"></i>
+                                <span>{{ Children.Name }}</span>
                             </template>
-                            <el-menu-item :index="Children.Url" v-for="Children in item.Children" :key="Children.Url">
-                                <template slot="title">
-                                    <i class="el-icon-menu"></i>
-                                    <span>{{ Children.Name }}</span>
-                                </template>
-                            </el-menu-item>
-                        </el-submenu>
-                    </el-menu>
-                </el-aside>
-                <el-container>
-                    <el-main>
-                        <router-view></router-view>
-                    </el-main>
-                </el-container>
+                        </el-menu-item>
+                    </el-submenu>
+                </el-menu>
+            </el-aside>
+            <el-container>
+                <el-main>
+                    <router-view></router-view>
+                </el-main>
             </el-container>
         </el-container>
-    </div>
+    </el-container>
+</div>
 </template>
 
 <script>
