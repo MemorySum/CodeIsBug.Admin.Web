@@ -26,8 +26,7 @@ const SysRoleMenuComparison = () =>
 const cityInfo = () =>
     import ( /* webpackChunkName: 'cityInfo' */ '../view/CityInfo/index.vue')
 
-const EmailSmtpSetting = () =>
-    import ( /* webpackChunkName: 'EmailSmtpSetting' */ '../view/EmailSmtpSetting/index.vue')
+
 
 Vue.use(VueRouter)
 
@@ -70,9 +69,6 @@ const router = new VueRouter({
                 }, {
                     path: '/SysRoleMenuComparison',
                     component: SysRoleMenuComparison
-                }, {
-                    path: '/EmailSmtpSetting',
-                    component: EmailSmtpSetting
                 }
             ]
         }

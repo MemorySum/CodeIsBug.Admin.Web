@@ -53,7 +53,7 @@ export default {
     methods: {
         loadRoleTreeData() {
             this.$http
-                .get("/api/Roles/GetRoles")
+                .get("/api/Roles/GetRolesTree")
                 .then((res) => {
                     if (!res) {
                         return this.$message.error("获取角色列表出错");
@@ -65,7 +65,7 @@ export default {
         },
         loadMenuTreeData() {
             this.$http
-                .get("/api/Menu/GetMenus", {
+                .get("/api/Menu/GetAllMenu", {
                     params: this.queryInfo,
                 })
                 .then((res) => {
@@ -81,7 +81,7 @@ export default {
                 return this.$message.error("请选择一条角色信息");
             }
             this.$http
-                .get("/api/RoleMenuMap/GetMenuListByRoleId", {
+                .get("/api/RoleMenuMap/GetRoleMenuList", {
                     params: {
                         roleGuid: data.RoleId,
                     },

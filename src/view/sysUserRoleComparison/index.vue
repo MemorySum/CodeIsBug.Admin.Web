@@ -98,7 +98,7 @@ export default {
         },
         loadRoleTreeData() {
             this.$http
-                .get("/api/Roles/GetRoles")
+                .get("/api/Roles/GetRolesTree")
                 .then((res) => {
                     if (!res) {
                         return this.$message.error("获取角色列表出错");
@@ -113,7 +113,7 @@ export default {
                 return this.$message.error("请选择一条用户信息");
             }
             this.$http
-                .get("/api/EmpRoleMap/GetUserRolesByUserId", {
+                .get("/api/EmpRoleMap/GetUserRoles", {
                     params: {
                         userGuid: row.UserId,
                     },
@@ -150,7 +150,7 @@ export default {
                 })
                 .then(() => {
                     this.$http
-                        .post("/api/EmpRoleMap/SaveRoleId", this.saveRoleInfo)
+                        .post("/api/EmpRoleMap/SaveUserRole", this.saveRoleInfo)
                         .then((res) => {
                             if (!res) {
                                 return this.$message.error("保存角色发生异常!");

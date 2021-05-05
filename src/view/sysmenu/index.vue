@@ -168,7 +168,7 @@ export default {
     methods: {
         loadData() {
             this.$http
-                .get('/api/Menu/GetMenus', {
+                .get('/api/Menu/GetAllMenu', {
                     params: this.queryInfo
                 })
                 .then(res => {
@@ -228,7 +228,7 @@ export default {
                     return false
                 } else {
                     this.$http
-                        .post('/api/Menu/UpdateMenu', this.editForm)
+                        .put('/api/Menu/UpdateMenu', this.editForm)
                         .then(res => {
                             if (!res) {
                                 return this.$message.error('修改菜单发生异常!')
@@ -321,7 +321,7 @@ export default {
                 })
                 .then(() => {
                     this.$http
-                        .get('/api/Menu/DelMenu', {
+                        .delete('/api/Menu/DelMenu', {
                             params: {
                                 menuId: id
                             }
