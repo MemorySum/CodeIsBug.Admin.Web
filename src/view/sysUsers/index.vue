@@ -237,7 +237,7 @@ export default {
                 })
                 .then(() => {
                     this.$http
-                        .get('/api/SysUser/DelUser', {
+                        .delete('/api/SysUser/DelUser', {
                             params: {
                                 UserId: UserId
                             }
@@ -290,7 +290,7 @@ export default {
                     return false
                 } else {
                     this.$http
-                        .post('/api/SysUser/UpdateUserInfo', this.editForm)
+                        .put('/api/SysUser/UpdateUserInfo', this.editForm)
                         .then((res) => {
                             if (!res) {
                                 return this.$message.error('修改用户发生异常!')

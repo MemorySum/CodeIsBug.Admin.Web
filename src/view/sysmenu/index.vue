@@ -8,7 +8,9 @@
         </el-breadcrumb>
     </div>
     <div>
-        <el-card class="box-card" shadow="never">
+      <el-tabs v-model="activeName" @tab-click="handleChangeTab">
+        <el-tab-pane label="菜单列表" name="MenuList">
+            <el-card class="box-card" shadow="never">
             <div slot="header" class="clearfix">
                 <el-button type="primary" @click="dialogFormVisible = true">新增菜单</el-button>
             </div>
@@ -45,6 +47,9 @@
                 </el-table>
             </div>
         </el-card>
+        </el-tab-pane>
+        <el-tab-pane label="按钮配置" name="ButtonList"></el-tab-pane >
+      </el-tabs>
 
         <el-dialog title="新增菜单" :visible.sync="dialogFormVisible" center width="30%" @open="loadingData">
             <el-form :model="form" :rules="Rules" ref="addRuleForm">
@@ -146,6 +151,7 @@ export default {
             dialogFormVisible: false,
             dialogFormEditVisible: false,
             formLabelWidth: '120px',
+            activeName:"MenuList",
             Rules: {
                 Name: [{
                     required: true,
@@ -168,7 +174,7 @@ export default {
     methods: {
         loadData() {
             this.$http
-                .get('/api/Menu/GetMenus', {
+                .get('/api/Menu/GetAllMenu', {
                     params: this.queryInfo
                 })
                 .then(res => {
@@ -228,7 +234,7 @@ export default {
                     return false
                 } else {
                     this.$http
-                        .post('/api/Menu/UpdateMenu', this.editForm)
+                        .put('/api/Menu/UpdateMenu', this.editForm)
                         .then(res => {
                             if (!res) {
                                 return this.$message.error('修改菜单发生异常!')
@@ -321,7 +327,7 @@ export default {
                 })
                 .then(() => {
                     this.$http
-                        .get('/api/Menu/DelMenu', {
+                        .delete('/api/Menu/DelMenu', {
                             params: {
                                 menuId: id
                             }
@@ -343,7 +349,11 @@ export default {
                         })
                 })
                 .catch(() => {})
+        },
+        handleChangeTab(tab,event){
+          console.log(tab,event);
         }
+
     }
 }
 </script>

@@ -2,32 +2,33 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 const Login = () =>
-    import ( /* webpackChunkName: 'Index' */ '../view/Login.vue')
+    import ('../view/Login.vue')
 const Home = () =>
-    import ( /* webpackChunkName: 'Index' */ '../view/Home.vue')
+    import ('../view/Home.vue')
 const Welcome = () =>
-    import ( /* webpackChunkName: 'Index' */ '../view/Welcome.vue')
+    import ('../view/Welcome.vue')
 
 const sysmenu = () =>
-    import ( /* webpackChunkName: 'sysmenu' */ '../view/sysmenu/index.vue')
+    import ('../view/sysmenu/index.vue')
 
 const sysUsers = () =>
-    import ( /* webpackChunkName: 'sysUsers' */ '../view/sysUsers/index.vue')
+    import ('../view/sysUsers/index.vue')
 
 const sysRoles = () =>
-    import ( /* webpackChunkName: 'sysRoles' */ '../view/sysroles/index.vue')
+    import ('../view/sysroles/index.vue')
 
 const sysUserRoleComparison = () =>
-    import ( /* webpackChunkName: 'sysUserRoleComparison' */ '../view/sysUserRoleComparison/index.vue')
+    import ('../view/sysUserRoleComparison/index.vue')
 
 const SysRoleMenuComparison = () =>
-    import ( /* webpackChunkName: 'SysRoleMenuComparison' */ '../view/SysRoleMenuComparison/index.vue')
+    import ('../view/SysRoleMenuComparison/index.vue')
 
 const cityInfo = () =>
-    import ( /* webpackChunkName: 'cityInfo' */ '../view/CityInfo/index.vue')
+    import ('../view/CityInfo/index.vue')
+const syserrorlog = () =>
+    import ("../view/SysErrorLog/index.vue")
 
-const EmailSmtpSetting = () =>
-    import ( /* webpackChunkName: 'EmailSmtpSetting' */ '../view/EmailSmtpSetting/index.vue')
+
 
 Vue.use(VueRouter)
 
@@ -70,10 +71,12 @@ const router = new VueRouter({
                 }, {
                     path: '/SysRoleMenuComparison',
                     component: SysRoleMenuComparison
-                }, {
-                    path: '/EmailSmtpSetting',
-                    component: EmailSmtpSetting
+                },
+                {
+                    path: '/syserrorlog',
+                    component: syserrorlog
                 }
+
             ]
         }
 

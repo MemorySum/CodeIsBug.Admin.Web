@@ -32,7 +32,7 @@ axios.interceptors.response.use(response => {
 }, error => {
 
     if (error.response.status === 401) {
-        // iView.Message.warning('未获取到登录状态');
+       
         router.push({
             name: '/login'
         });

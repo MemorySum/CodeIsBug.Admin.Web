@@ -160,7 +160,7 @@ export default {
     methods: {
         loadData() {
             this.$http
-                .get("/api/Roles/GetRoles")
+                .get("/api/Roles/GetRolesTree")
                 .then((res) => {
                     if (!res) {
                         return this.$message.error("获取角色列表出错");
@@ -218,7 +218,7 @@ export default {
                 })
                 .then(() => {
                     this.$http
-                        .get('/api/Roles/DelRole', {
+                        .delete('/api/Roles/DelRole', {
                             params: {
                                 roleGuid: roleId
                             }
@@ -281,7 +281,7 @@ export default {
                     return false
                 } else {
                     this.$http
-                        .post('/api/Roles/EditRoleInfo', this.editRoleForm)
+                        .put('/api/Roles/EditRoleInfo', this.editRoleForm)
                         .then((res) => {
                             if (!res) {
                                 return this.$message.error('修改角色发生异常!')

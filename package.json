@@ -1,45 +1,47 @@
 {
-	"name": "codeisbug.admin.web",
-	"version": "0.1.0",
-	"private": true,
-	"scripts": {
-		"serve": "vue-cli-service serve",
-		"build": "vue-cli-service build",
-		"lint": "vue-cli-service lint"
-	},
-	"dependencies": {
-		"@riophae/vue-treeselect": "^0.4.0",
-		"axios": "^0.19.2",
-		"babel-eslint": "^10.1.0",
-		"core-js": "^3.6.5",
-		"e-icon-picker": "^1.0.17",
-		"element-ui": "^2.13.2",
-		"eslint": "^7.3.1",
-		"http-proxy-middleware": "^1.0.4",
-		"less": "^3.11.3",
-		"less-loader": "^6.1.2",
-		"portfinder": "^1.0.21",
-		"vue": "^2.6.11",
-		"vue-fontawesome-elementui-icon-picker": "^0.1.9",
-		"vue-router": "^3.2.0"
-	},
-	"devDependencies": {
-		"@vue/cli-plugin-babel": "~4.4.0",
-		"@vue/cli-plugin-eslint": "~4.4.0",
-		"@vue/cli-plugin-router": "~4.4.0",
-		"@vue/cli-service": "~4.4.0",
-		"@vue/eslint-config-standard": "^5.1.2",
-		"axios": "^0.18.0",
-		"eslint-plugin-import": "^2.20.2",
-		"eslint-plugin-node": "^11.1.0",
-		"eslint-plugin-promise": "^4.2.1",
-		"eslint-plugin-standard": "^4.0.0",
-		"eslint-plugin-vue": "^6.2.2",
-		"vue-cli-plugin-axios": "0.0.4",
-		"vue-cli-plugin-element": "^1.0.1",
-		"vue-template-compiler": "^2.6.11"
-	},
-	"resolutions": {
-		"@vue/cli-service/portfinder": "1.0.21"
-	}
+    "name": "codeisbug.admin.web",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build",
+        "lint": "vue-cli-service lint"
+    },
+    "dependencies": {
+        "@riophae/vue-treeselect": "^0.4.0",
+        "axios": "^0.19.2",
+        "babel-eslint": "^10.1.0",
+        "core-js": "^3.6.5",
+        "e-icon-picker": "^1.0.17",
+        "element-ui": "^2.13.2",
+        "eslint": "^7.3.1",
+        "http-proxy-middleware": "^1.0.4",
+        "less": "^3.11.3",
+        "less-loader": "^6.1.2",
+        "portfinder": "^1.0.21",
+        "vite": "^2.2.4",
+        "vite-plugin-vue2": "^1.5.1",
+        "vue": "^2.6.11",
+        "vue-fontawesome-elementui-icon-picker": "^0.1.9",
+        "vue-router": "^3.2.0"
+    },
+    "devDependencies": {
+        "@vue/cli-plugin-babel": "~4.4.0",
+        "@vue/cli-plugin-eslint": "~4.4.0",
+        "@vue/cli-plugin-router": "~4.4.0",
+        "@vue/cli-service": "~4.4.0",
+        "@vue/eslint-config-standard": "^5.1.2",
+        "axios": "^0.18.0",
+        "eslint-plugin-import": "^2.20.2",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-promise": "^4.2.1",
+        "eslint-plugin-standard": "^4.0.0",
+        "eslint-plugin-vue": "^6.2.2",
+        "vue-cli-plugin-axios": "0.0.4",
+        "vue-cli-plugin-element": "^1.0.1",
+        "vue-template-compiler": "^2.6.11"
+    },
+    "resolutions": {
+        "@vue/cli-service/portfinder": "1.0.21"
+    }
 }
