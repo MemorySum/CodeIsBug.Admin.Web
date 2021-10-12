@@ -32,7 +32,7 @@ axios.interceptors.response.use(response => {
 }, error => {
 
     if (error.response.status === 401) {
-       
+        ElementUI.Message.error("登录过期，请重新登录")
         router.push({
             name: '/login'
         });
