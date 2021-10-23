@@ -64,7 +64,7 @@ export default {
             menuIndex: [],
             userName: '',
             userRoleName: ''
-        };
+        }
     },
     created() {
         this.loadIndexInfo()
@@ -72,19 +72,19 @@ export default {
     },
     methods: {
         IndexHeaderEnvent(command) {
-            switch (command) {
-                case "logOut":
-                    sessionStorage.removeItem("user_access_Token");
-                    sessionStorage.removeItem("userInfo");
-                    this.$router.push("/login");
-                    break;
-            }
+          switch (command) {
+            case 'logOut':
+              sessionStorage.removeItem('user_access_Token')
+              sessionStorage.removeItem('userInfo')
+              this.$router.push('/login')
+              break
+          }
         },
         toggleCospace() {
-            this.IsCospace = !this.IsCospace;
+          this.IsCospace = !this.IsCospace
         },
         loadIndexInfo() {
-            let userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+          const userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
             if (userInfo != null) {
                 this.userName = userInfo.UserName
                 this.menuIndex = userInfo.UserMenus
@@ -92,23 +92,24 @@ export default {
             }
         },
         getIndexMenu() {
-            this.$http
-                .get("/api/Menu/GetAllMenuForIndex")
+          this.$http
+            .get('/api/Menu/GetAllMenuForIndex')
                 .then((res) => {
-                    if (!res) {
-                        return this.$message.error("获取左侧菜单发生异常!");
-                    }
-                    var rtnData = res.data;
-                    if (rtnData.Code !== 1) {
-                        return this.$message.error(rtnData.Message);
-                    } else {
-                        this.menuIndex = JSON.parse(rtnData.Object);
-                    }
+                  if (!res) {
+                    return this.$message.error('获取左侧菜单发生异常!')
+                  }
+                  var rtnData = res.data
+                  if (rtnData.Code !== 1) {
+                    return this.$message.error(rtnData.Message)
+                  } else {
+                    this.menuIndex = JSON.parse(rtnData.Object)
+                  }
                 })
-                .catch((error) => {});
-        },
-    },
-};
+            .catch((error) => {
+            })
+        }
+    }
+}
 </script>
 
 <style lang="less">

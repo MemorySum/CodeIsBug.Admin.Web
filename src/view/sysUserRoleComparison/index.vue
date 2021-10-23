@@ -51,120 +51,124 @@ export default {
             showColumn: false,
             limits: [2, 5, 10, 20],
             queryInfo: {
-                query: "",
-                pageIndex: 1,
-                pageSize: 20,
+              query: '',
+              pageIndex: 1,
+              pageSize: 20
             },
-            defaultProps: {
-                children: "Children",
-                label: "Name",
-            },
-            saveRoleInfo: {
-                UserId: null,
-                selectRoleIds: [],
-            },
-        };
+          defaultProps: {
+            children: 'Children',
+            label: 'Name'
+          },
+          saveRoleInfo: {
+            UserId: null,
+            selectRoleIds: []
+          }
+        }
     },
     created() {
-        this.loadUserData();
-        this.loadRoleTreeData();
+      this.loadUserData()
+      this.loadRoleTreeData()
     },
     methods: {
         handleSizeChange(val) {
-            this.queryInfo.pageSize = val;
-            this.queryInfo.pageIndex = 1;
-            this.loadData();
+          this.queryInfo.pageSize = val
+          this.queryInfo.pageIndex = 1
+          this.loadData()
         },
         handleCurrentChange(val) {
-            this.queryInfo.pageIndex = val;
-            this.loadData();
+          this.queryInfo.pageIndex = val
+          this.loadData()
         },
         search() {
-            this.loadUserData();
+          this.loadUserData()
         },
         loadUserData() {
-            this.$http
-                .get("/api/SysUser/GetUserList", {
-                    params: this.queryInfo,
-                })
-                .then((res) => {
-                    if (!res) {
-                        return this.$message.error("获取用户列表出错");
-                    }
-                    this.tableData = res.data.Object.data;
-                    this.total = res.data.Object.count;
-                })
-                .catch((err) => {});
+          this.$http
+            .get('/api/SysUser/GetUserList', {
+              params: this.queryInfo
+            })
+            .then((res) => {
+              if (!res) {
+                return this.$message.error('获取用户列表出错')
+              }
+              this.tableData = res.data.Object.data
+              this.total = res.data.Object.count
+            })
+            .catch((err) => {
+            })
         },
         loadRoleTreeData() {
-            this.$http
-                .get("/api/Roles/GetRolesTree")
-                .then((res) => {
-                    if (!res) {
-                        return this.$message.error("获取角色列表出错");
-                    }
+          this.$http
+            .get('/api/Roles/GetRolesTree')
+            .then((res) => {
+              if (!res) {
+                return this.$message.error('获取角色列表出错')
+              }
 
-                    this.treeData = res.data.Object;
-                })
-                .catch((err) => {});
+              this.treeData = res.data.Object
+            })
+            .catch((err) => {
+            })
         },
         getRoleByUserId(row) {
             if (!row.UserId) {
-                return this.$message.error("请选择一条用户信息");
+              return this.$message.error('请选择一条用户信息')
             }
-            this.$http
-                .get("/api/EmpRoleMap/GetUserRoles", {
-                    params: {
-                        userGuid: row.UserId,
-                    },
-                })
+          this.$http
+            .get('/api/EmpRoleMap/GetUserRoles', {
+              params: {
+                userGuid: row.UserId
+              }
+            })
                 .then((res) => {
                     if (!res) {
-                        return this.$message.error("获取角色列表出错");
+                      return this.$message.error('获取角色列表出错')
                     }
-                    var rtnData = res.data;
-                    if (rtnData.Code < 0) {
-                        return this.$message.error(rtnData.Message);
-                    } else {
-                        this.saveRoleInfo.UserId = row.UserId;
-                        this.$refs.roleTree.setCheckedKeys(rtnData.Object);
-                    }
+                  var rtnData = res.data
+                  if (rtnData.Code < 0) {
+                    return this.$message.error(rtnData.Message)
+                  } else {
+                    this.saveRoleInfo.UserId = row.UserId
+                    this.$refs.roleTree.setCheckedKeys(rtnData.Object)
+                  }
                 })
-                .catch((err) => {});
+            .catch((err) => {
+            })
         },
         saveRoleInfoEvent() {
-            if (!this.saveRoleInfo.UserId) {
-                return this.$message.error("请先选择一条用户信息");
-            }
-            var CheckedNodes = this.$refs.roleTree.getCheckedKeys(false);
+          if (!this.saveRoleInfo.UserId) {
+            return this.$message.error('请先选择一条用户信息')
+          }
+          var CheckedNodes = this.$refs.roleTree.getCheckedKeys(false)
 
-            if (CheckedNodes.length === 0) {
-                return this.$message.error("请至少分配一个角色以保证首页加载正常");
-            }
-            this.saveRoleInfo.selectRoleIds = CheckedNodes; //获取所有选中的角色
-            this.$confirm('是否确认分配角色, 是否继续?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning',
-                    center: true
+          if (CheckedNodes.length === 0) {
+            return this.$message.error('请至少分配一个角色以保证首页加载正常')
+          }
+          this.saveRoleInfo.selectRoleIds = CheckedNodes // 获取所有选中的角色
+          this.$confirm('是否确认分配角色, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+            center: true
+          })
+            .then(() => {
+              this.$http
+                .post('/api/EmpRoleMap/SaveUserRole', this.saveRoleInfo)
+                .then((res) => {
+                  if (!res) {
+                    return this.$message.error('保存角色发生异常!')
+                  }
+                  var rtnData = res.data
+                  if (rtnData.Code !== 1) {
+                    return this.$message.error(rtnData.Message)
+                  } else {
+                    return this.$message.success('角色保存成功!')
+                  }
                 })
-                .then(() => {
-                    this.$http
-                        .post("/api/EmpRoleMap/SaveUserRole", this.saveRoleInfo)
-                        .then((res) => {
-                            if (!res) {
-                                return this.$message.error("保存角色发生异常!");
-                            }
-                            var rtnData = res.data;
-                            if (rtnData.Code !== 1) {
-                                return this.$message.error(rtnData.Message);
-                            } else {
-                                return this.$message.success("角色保存成功!");
-                            }
-                        })
-                        .catch((error) => {});
-                });
-        },
-    },
-};
+                .catch((error) => {
+                })
+            })
+        }
+    }
+}
 </script>

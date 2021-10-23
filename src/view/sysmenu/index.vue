@@ -141,27 +141,27 @@ export default {
             editForm: {
                 MenuId: '0',
                 Name: '',
-                Icon: '',
-                Url: '',
-                Level: '0',
-                Sort: '',
-                ParentId: '00000000-0000-0000-0000-000000000000'
+              Icon: '',
+              Url: '',
+              Level: '0',
+              Sort: '',
+              ParentId: '00000000-0000-0000-0000-000000000000'
             },
-            loading: false,
-            dialogFormVisible: false,
-            dialogFormEditVisible: false,
-            formLabelWidth: '120px',
-            activeName:"MenuList",
-            Rules: {
-                Name: [{
-                    required: true,
-                    message: '请输入菜单名称',
-                    trigger: 'blur'
-                }],
-                ParentId: [{
-                    required: true,
-                    message: '请选择二级菜单',
-                    trigger: 'blur'
+          loading: false,
+          dialogFormVisible: false,
+          dialogFormEditVisible: false,
+          formLabelWidth: '120px',
+          activeName: 'MenuList',
+          Rules: {
+            Name: [{
+              required: true,
+              message: '请输入菜单名称',
+              trigger: 'blur'
+            }],
+            ParentId: [{
+              required: true,
+              message: '请选择二级菜单',
+              trigger: 'blur'
                 }]
             },
 
@@ -340,19 +340,20 @@ export default {
                             if (rtnData.Code !== 1) {
                                 return this.$message.error(rtnData.Message)
                             } else {
-                                this.loadData()
-                                return this.$message.success('菜单删除成功')
+                              this.loadData()
+                              return this.$message.success('菜单删除成功')
                             }
                         })
-                        .catch(error => {
-                            return this.$message.error(error.data.Message)
-                        })
+                      .catch(error => {
+                        return this.$message.error(error.data.Message)
+                      })
                 })
-                .catch(() => {})
+              .catch(() => {
+              })
         },
-        handleChangeTab(tab,event){
-          console.log(tab,event);
-        }
+      handleChangeTab(tab, event) {
+        console.log(tab, event)
+      }
 
     }
 }

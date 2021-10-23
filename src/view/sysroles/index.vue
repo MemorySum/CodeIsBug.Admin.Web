@@ -90,32 +90,33 @@
 import Treeselect from '@riophae/vue-treeselect'
 // import the styles
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+
 export default {
     components: {
         Treeselect
     },
     data() {
         return {
-            tableData: [], //列表数据
-            menuOptions: [], //下拉框数据
-            formLabelWidth: "120px", //form表单元素的默认宽度
-            dialogAddFormVisible: false, //是否显示添加界面
-            dialogEditFormVisible: false, //是否显示修改界面
-            ParentItemName: '',
-            ParentItemId: '00000000-0000-0000-0000-000000000000',
-            addRoleform: {
-                Name: "",
-                Sort: "",
-                Remark: "",
-                ParentId: '00000000-0000-0000-0000-000000000000',
-            },
-            editRoleForm: {
-                RoleId: '00000000-0000-0000-0000-000000000000',
-                Name: "",
-                Sort: "",
-                Remark: "",
-                ParentId: '00000000-0000-0000-0000-000000000000',
-            },
+          tableData: [], // 列表数据
+          menuOptions: [], // 下拉框数据
+          formLabelWidth: '120px', // form表单元素的默认宽度
+          dialogAddFormVisible: false, // 是否显示添加界面
+          dialogEditFormVisible: false, // 是否显示修改界面
+          ParentItemName: '',
+          ParentItemId: '00000000-0000-0000-0000-000000000000',
+          addRoleform: {
+            Name: '',
+            Sort: '',
+            Remark: '',
+            ParentId: '00000000-0000-0000-0000-000000000000'
+          },
+          editRoleForm: {
+            RoleId: '00000000-0000-0000-0000-000000000000',
+            Name: '',
+            Sort: '',
+            Remark: '',
+            ParentId: '00000000-0000-0000-0000-000000000000'
+          },
             defaultProps: {
                 children: 'Children',
                 label: 'Name'
@@ -143,43 +144,44 @@ export default {
 
             normalizer(node) {
                 if (node.children && !node.children.length) {
-                    delete node.children;
+                  delete node.children
                 }
                 return {
                     id: node.RoleId,
                     label: node.Name,
-                    children: node.Children,
+                  children: node.Children
                 }
             }
-        };
+        }
 
     },
     created() {
-        this.loadData();
+      this.loadData()
     },
     methods: {
         loadData() {
-            this.$http
-                .get("/api/Roles/GetRolesTree")
+          this.$http
+            .get('/api/Roles/GetRolesTree')
                 .then((res) => {
-                    if (!res) {
-                        return this.$message.error("获取角色列表出错");
-                    }
+                  if (!res) {
+                    return this.$message.error('获取角色列表出错')
+                  }
 
-                    this.tableData = res.data.Object;
-                    //深层拷贝对象
-                    let obj = JSON.parse(JSON.stringify(res.data.Object))
-                    this.menuOptions = obj;
-                    let nothing = {
-                        RoleId: '00000000-0000-0000-0000-000000000000',
-                        Name: '无'
-                    }
-                    this.menuOptions.unshift(nothing)
+                  this.tableData = res.data.Object
+                  // 深层拷贝对象
+                  const obj = JSON.parse(JSON.stringify(res.data.Object))
+                  this.menuOptions = obj
+                  const nothing = {
+                    RoleId: '00000000-0000-0000-0000-000000000000',
+                    Name: '无'
+                  }
+                  this.menuOptions.unshift(nothing)
 
                 })
-                .catch((err) => {});
+            .catch((err) => {
+            })
         },
-        //打开编辑页面 请求后端数据
+      // 打开编辑页面 请求后端数据
         edit(roleId) {
             if (!roleId) {
                 return
@@ -239,16 +241,16 @@ export default {
                 })
                 .catch(() => {})
         },
-        //取消按钮关闭抽屉
+      // 取消按钮关闭抽屉
         cancelAddForm() {
-            this.$refs.addFormRef.resetFields();
-            this.dialogAddFormVisible = false;
+          this.$refs.addFormRef.resetFields()
+          this.dialogAddFormVisible = false
         },
         cancelEditForm() {
-            this.$refs.editFormRef.resetFields();
-            this.dialogEditFormVisible = false;
+          this.$refs.editFormRef.resetFields()
+          this.dialogEditFormVisible = false
         },
-        //新增保存
+      // 新增保存
         submit() {
             this.$refs.addFormRef.validate((isvalid) => {
                 if (!isvalid) {
@@ -291,18 +293,19 @@ export default {
                             if (rtnData.Code !== 1) {
                                 return this.$message.error(rtnData.Message)
                             } else {
-                                this.loadData()
-                                this.dialogEditFormVisible = false
-                                this.$refs.editFormRef.resetFields()
-                                return this.$message.success('角色修改成功!')
+                              this.loadData()
+                              this.dialogEditFormVisible = false
+                              this.$refs.editFormRef.resetFields()
+                              return this.$message.success('角色修改成功!')
                             }
                         })
-                        .catch(error => {})
+                      .catch(error => {
+                      })
                 }
             })
         }
-    },
-};
+    }
+}
 </script>
 
 <style lang="less" scoped>

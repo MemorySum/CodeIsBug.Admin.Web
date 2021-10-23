@@ -25,10 +25,5 @@ module.exports = {
     'no-trailing-spaces':0,
     'arrow-spacing':0,
     'padded-blocks':0
-  },
-
-  extends: [
-    'plugin:vue/essential',
-    '@vue/standard'
-  ]
+  }
 }

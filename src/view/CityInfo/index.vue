@@ -37,15 +37,15 @@ export default {
                 children: 'Children',
                 label: 'CityName'
             }
-        };
+        }
     },
     created() {
         this.loadTreeData()
     },
     methods: {
         filterNode(value, data) {
-            if (!value) return true;
-            return data.CityName.indexOf(value) !== -1;
+          if (!value) return true
+          return data.CityName.indexOf(value) !== -1
         },
         loadTreeData() {
 
@@ -61,7 +61,7 @@ export default {
         }
     }
 
-};
+}
 </script>
 
 <style lang="less" scoped>

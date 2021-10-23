@@ -56,11 +56,11 @@ export default {
     return {
       tableData:[],
        loading: false
-    };
+    }
   },
    created() {
-        this.loadData()
-        this.$message.success("dd")
+     this.loadData()
+     this.$message.success('dd')
     },
     methods:{
       loadData(){
@@ -78,7 +78,7 @@ export default {
                 })
       }
     }
-};
+}
 </script>
 <style lang="less" scoped>
 </style>
