@@ -27,17 +27,17 @@ axios.interceptors.response.use(response => {
     if (response.status === 200) {
 
     }
-  return response
+    return response
 }, error => {
 
-  if (error.response.status === 401) {
-    ElementUI.Message.error('登录过期，请重新登录')
-    router.push({
-      name: '/login'
-    })
+    if (error.response.status === 401) {
+        ElementUI.Message.error('登录过期，请重新登录')
+        router.push({
+            name: '/login'
+        })
 
-  }
-  return Promise.resolve(error.response)
+    }
+    return Promise.resolve(error.response)
 })
 
 // 引入ajax请求组件 设置api前缀

@@ -1,32 +1,33 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import ElementUI from 'element-ui'
 
 const Login = () =>
-    import('../view/Login.vue')
+    import ('../view/Login.vue')
 const Home = () =>
-  import('../view/Home.vue')
+    import ('../view/Home.vue')
 const Welcome = () =>
-  import('../view/Welcome.vue')
+    import ('../view/Welcome.vue')
 
 const sysmenu = () =>
-  import('../view/sysmenu/index.vue')
+    import ('../view/sysmenu/index.vue')
 
 const sysUsers = () =>
-  import('../view/sysUsers/index.vue')
+    import ('../view/sysUsers/index.vue')
 
 const sysRoles = () =>
-  import('../view/sysroles/index.vue')
+    import ('../view/sysroles/index.vue')
 
 const sysUserRoleComparison = () =>
-  import('../view/sysUserRoleComparison/index.vue')
+    import ('../view/sysUserRoleComparison/index.vue')
 
 const SysRoleMenuComparison = () =>
-  import('../view/SysRoleMenuComparison/index.vue')
+    import ('../view/SysRoleMenuComparison/index.vue')
 
 const cityInfo = () =>
-  import('../view/CityInfo/index.vue')
+    import ('../view/CityInfo/index.vue')
 const syserrorlog = () =>
-  import('../view/SysErrorLog/index.vue')
+    import ('../view/SysErrorLog/index.vue')
 
 Vue.use(VueRouter)
 
@@ -83,7 +84,12 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (to.path == '/login') return next()
     const user_access_Token = sessionStorage.getItem('user_access_Token')
-    if (!user_access_Token) return next('/login')
+    if (!user_access_Token) {
+        ElementUI.Message.error('登录过期，请重新登录')
+        sessionStorage.clear();
+        return next('/login')
+
+    }
     next()
 })
 

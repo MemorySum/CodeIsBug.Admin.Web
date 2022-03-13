@@ -8,48 +8,48 @@
         </el-breadcrumb>
     </div>
     <div>
-      <el-tabs v-model="activeName" @tab-click="handleChangeTab">
-        <el-tab-pane label="菜单列表" name="MenuList">
-            <el-card class="box-card" shadow="never">
-            <div slot="header" class="clearfix">
-                <el-button type="primary" @click="dialogFormVisible = true">新增菜单</el-button>
-            </div>
-            <div>
-                <el-table :data="tableData" style="width: 100%;height: 100%;" border row-key="MenuId" default-expand-all :tree-props="{children: 'Children', hasChildren: 'hasChildren'}">
-                    <el-table-column prop="Name" sortable label="菜单名称" min-width="120">
-                        <template slot-scope="scope">
-                            <i :class="scope.row.Icon"></i>
-                            <span style="margin-left: 5px;">{{ scope.row.Name}}</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop="Url" label="地址" min-width="120"></el-table-column>
-                    <el-table-column prop="Level" sortable label="层级" min-width="60">
-                        <template slot-scope="scope">
-                            <div v-if="scope.row.Level===0">
-                                <el-tag type="success">一级菜单</el-tag>
-                            </div>
-                            <div v-else>
-                                <el-tag type="warning">二级菜单</el-tag>
-                            </div>
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop="Sort" sortable label="排序" min-width="60"></el-table-column>
-                    <el-table-column prop="AddTime" sortable label="添加时间" min-width="120"></el-table-column>
-                    <el-table-column prop="ModifyTime" sortable label="最后修改时间" min-width="120"></el-table-column>
-                    <el-table-column label="操作">
-                        <template slot-scope="scope">
-                            <el-button-group>
-                                <el-button type="info" size="mini"  @click="edit(scope.row.MenuId)">编辑</el-button>
-                                <el-button type="danger" size="mini" :disabled="scope.row.Level===0" @click="del(scope.row.MenuId)">删除</el-button>
-                            </el-button-group>
-                        </template>
-                    </el-table-column>
-                </el-table>
-            </div>
-        </el-card>
-        </el-tab-pane>
-        <el-tab-pane label="按钮配置" name="ButtonList"></el-tab-pane >
-      </el-tabs>
+        <el-tabs v-model="activeName" @tab-click="handleChangeTab">
+            <el-tab-pane label="菜单列表" name="MenuList">
+                <el-card class="box-card" shadow="never">
+                    <div slot="header" class="clearfix">
+                        <el-button type="primary" @click="dialogFormVisible = true">新增菜单</el-button>
+                    </div>
+                    <div>
+                        <el-table :data="tableData" style="width: 100%;height: 100%;" border row-key="MenuId" default-expand-all :tree-props="{children: 'Children', hasChildren: 'hasChildren'}">
+                            <el-table-column prop="Name" sortable label="菜单名称" min-width="120">
+                                <template slot-scope="scope">
+                                    <i :class="scope.row.Icon"></i>
+                                    <span style="margin-left: 5px;">{{ scope.row.Name}}</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="Url" label="地址" min-width="120"></el-table-column>
+                            <el-table-column prop="Level" sortable label="层级" min-width="60">
+                                <template slot-scope="scope">
+                                    <div v-if="scope.row.Level===0">
+                                        <el-tag type="success">一级菜单</el-tag>
+                                    </div>
+                                    <div v-else>
+                                        <el-tag type="warning">二级菜单</el-tag>
+                                    </div>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="Sort" sortable label="排序" min-width="60"></el-table-column>
+                            <el-table-column prop="AddTime" sortable label="添加时间" min-width="120"></el-table-column>
+                            <el-table-column prop="ModifyTime" sortable label="最后修改时间" min-width="120"></el-table-column>
+                            <el-table-column label="操作">
+                                <template slot-scope="scope">
+                                    <el-button-group>
+                                        <el-button type="info" size="mini" @click="edit(scope.row.MenuId)">编辑</el-button>
+                                        <el-button type="danger" size="mini" :disabled="scope.row.Level===0" @click="del(scope.row.MenuId)">删除</el-button>
+                                    </el-button-group>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                    </div>
+                </el-card>
+            </el-tab-pane>
+            <el-tab-pane label="按钮配置" name="ButtonList"></el-tab-pane>
+        </el-tabs>
 
         <el-dialog title="新增菜单" :visible.sync="dialogFormVisible" center width="30%" @open="loadingData">
             <el-form :model="form" :rules="Rules" ref="addRuleForm">
@@ -141,27 +141,27 @@ export default {
             editForm: {
                 MenuId: '0',
                 Name: '',
-              Icon: '',
-              Url: '',
-              Level: '0',
-              Sort: '',
-              ParentId: '00000000-0000-0000-0000-000000000000'
+                Icon: '',
+                Url: '',
+                Level: '0',
+                Sort: '',
+                ParentId: '00000000-0000-0000-0000-000000000000'
             },
-          loading: false,
-          dialogFormVisible: false,
-          dialogFormEditVisible: false,
-          formLabelWidth: '120px',
-          activeName: 'MenuList',
-          Rules: {
-            Name: [{
-              required: true,
-              message: '请输入菜单名称',
-              trigger: 'blur'
-            }],
-            ParentId: [{
-              required: true,
-              message: '请选择二级菜单',
-              trigger: 'blur'
+            loading: false,
+            dialogFormVisible: false,
+            dialogFormEditVisible: false,
+            formLabelWidth: '120px',
+            activeName: 'MenuList',
+            Rules: {
+                Name: [{
+                    required: true,
+                    message: '请输入菜单名称',
+                    trigger: 'blur'
+                }],
+                ParentId: [{
+                    required: true,
+                    message: '请选择二级菜单',
+                    trigger: 'blur'
                 }]
             },
 
@@ -340,20 +340,19 @@ export default {
                             if (rtnData.Code !== 1) {
                                 return this.$message.error(rtnData.Message)
                             } else {
-                              this.loadData()
-                              return this.$message.success('菜单删除成功')
+                                this.loadData()
+                                return this.$message.success('菜单删除成功')
                             }
                         })
-                      .catch(error => {
-                        return this.$message.error(error.data.Message)
-                      })
+                        .catch(error => {
+                            return this.$message.error(error.data.Message)
+                        })
                 })
-              .catch(() => {
-              })
+                .catch(() => {})
         },
-      handleChangeTab(tab, event) {
-        console.log(tab, event)
-      }
+        handleChangeTab(tab, event) {
+            console.log(tab, event)
+        }
 
     }
 }

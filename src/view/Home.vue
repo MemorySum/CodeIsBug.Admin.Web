@@ -25,7 +25,7 @@
                     <i :class="IsCospace ? 'el-icon-s-unfold' : 'el-icon-s-fold'"></i>
                 </div>
 
-                <el-menu width="200px" background-color="#393D49" text-color="#fff" active-text-color="#409eff" :collapse-transition="false" :collapse="IsCospace" unique-opened router :default-active="this.$route.path">
+                <el-menu width="200px" background-color="#393D49" text-color="#fff" active-text-color="#409eff" :collapse-transition="true" :collapse="IsCospace" unique-opened router :default-active="this.$route.path">
                     <el-menu-item slot="index">
                         <template>
                             <i class="el-icon-house"></i>
